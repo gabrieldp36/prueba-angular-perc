@@ -19,8 +19,8 @@ import { DialogCreateEditBookComponent } from '../dialog-create-edit-book/dialog
 export class BookListComponent implements AfterViewInit{
 
   // ViewRef
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
+  public paginator = viewChild(MatPaginator);
+  public sort = viewChild(MatSort);
 
   // Injección dependencias.
   private dialog = inject(MatDialog);
@@ -51,12 +51,12 @@ export class BookListComponent implements AfterViewInit{
     // Inyectamos la data que va a consumir la tabla.
     this.dataSource = new MatTableDataSource(this.libraryService.bookList());
     // configuramos el ordenamiento de la tabla.
-    this.dataSource.sort = this.sort!;
-    this.sort.active = 'id';
-    this.sort.direction = 'desc';
-    this.sort.sortChange.emit();
+    this.dataSource.sort = this.sort()!;
+    this.sort()!.active = 'id';
+    this.sort()!.direction = 'desc';
+    this.sort()!.sortChange.emit();
     // Configuramos el paginator.
-    this.dataSource.paginator = this.paginator!;
+    this.dataSource.paginator = this.paginator()!;
     this.matPaginatorIntl.itemsPerPageLabel = 'Libros por página';
     this.matPaginatorIntl.firstPageLabel = 'Página inicial';
     this.matPaginatorIntl.nextPageLabel = 'Página siguiente';
