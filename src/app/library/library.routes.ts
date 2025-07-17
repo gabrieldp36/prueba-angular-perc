@@ -11,6 +11,10 @@ export const countryRoutes: Routes = [
         path: 'books',
         component: BooksPageComponent,
       },
+      {
+        path: '**',
+        redirectTo: 'books',
+      },
     ],
   },
 ];

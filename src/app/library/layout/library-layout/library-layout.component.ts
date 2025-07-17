@@ -5,6 +5,7 @@ import { NavbarComponent } from "../../../shared/components/navbar/navbar.compon
 
 @Component({
   selector: 'app-library-layout',
+  standalone: true,
   imports: [FooterComponent, RouterOutlet, NavbarComponent],
   templateUrl: './library-layout.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,

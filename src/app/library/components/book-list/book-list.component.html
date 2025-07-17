@@ -1,1 +1,122 @@
+<section class="flex justify-center flex-col">
+
+  <!-- Formulario utilizado para el filtrado -->
+  <div>
+    <mat-form-field appearance="outline">
+      <mat-label>Filtrar</mat-label>
+      <input matInput (keyup)="applyFilter($event)" placeholder="Nombre del libro" #input>
+    </mat-form-field>
+  </div>
+
+  <!-- Tabla que muestra el listado de libros -->
+  <div class="w-full">
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+      <!-- Columna para mostrar un ícono del un libro -->
+      <ng-container matColumnDef="icono">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let row">
+          <div class="flex justify-end">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+              <g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5">
+                <path
+                  d="M20.5 16.929V10c0-3.771 0-5.657-1.172-6.828S16.271 2 12.5 2h-1C7.729 2 5.843 2 4.672 3.172S3.5 6.229 3.5 10v9.5" />
+                <path
+                  d="M8 3v3.69c0 .74 0 1.11.238 1.254q.014.01.032.017c.248.126.571-.064 1.219-.445c.484-.284.725-.427.992-.432h.037c.268.005.51.148.993.432c.648.381.971.571 1.22.445l.03-.017C13 7.8 13 7.43 13 6.69V3m7.5 14H6a2.5 2.5 0 0 0 0 5h14.5" />
+                <path d="M20.5 17a2.5 2.5 0 0 0 0 5" />
+              </g>
+            </svg>
+          </div>
+        </td>
+      </ng-container>
+
+      <!-- Columna que muestra el ID del libro -->
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+        <td mat-cell *matCellDef="let row"> {{row.id}} </td>
+      </ng-container>
+
+      <!-- Columna que muestra el nombre del libro -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
+        <td mat-cell *matCellDef="let row" class="text-center"> {{row.name}} </td>
+      </ng-container>
+
+      <!-- Columna de acciones -->
+      <ng-container matColumnDef="acciones">
+        <th mat-header-cell *matHeaderCellDef> Acciones </th>
+        <td mat-cell *matCellDef="let row">
+          <div class="flex justify-center gap-4">
+
+            <!-- Edición -->
+            <button
+              class="btn btn-soft btn-info"
+              (click)="openDialog(row)"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                <path
+                  fill="none"
+                  stroke="#89e0eb"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="1.5"
+                  d="M3.782 16.31L3 21l4.69-.782a3.96 3.96 0 0 0 2.151-1.106L20.42 8.532a1.98 1.98 0 0 0 0-2.8L18.269 3.58a1.98 1.98 0 0 0-2.802 0L4.888 14.16a3.96 3.96 0 0 0-1.106 2.15M14 6l4 4"
+                />
+              </svg>
+              Editar
+            </button>
+
+            <!-- Eliminación -->
+            <button
+              class="btn btn-soft btn-secondary"
+              (click)="this.libraryService.removeBook(row)"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                <path
+                  fill="none"
+                  stroke="#fd6f9c"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="1.5"
+                  d="m19.5 5.5l-.62 10.025c-.158 2.561-.237 3.842-.88 4.763a4 4 0 0 1-1.2 1.128c-.957.584-2.24.584-4.806.584c-2.57 0-3.855 0-4.814-.585a4 4 0 0 1-1.2-1.13c-.642-.922-.72-2.205-.874-4.77L4.5 5.5M9 11.735h6m-4.5 3.919h3M3 5.5h18m-4.945 0l-.682-1.408c-.454-.936-.68-1.403-1.071-1.695a2 2 0 0 0-.275-.172C13.594 2 13.074 2 12.034 2c-1.065 0-1.598 0-2.039.234a2 2 0 0 0-.278.18c-.396.303-.617.788-1.059 1.757L8.053 5.5" />
+              </svg>
+              Eliminar
+            </button>
+          </div>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+      <!-- Row que se muestra cuando no se encuentran resultados de búqueda -->
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" colspan="4">No se encontraron resultados para el término "{{input.value}}"</td>
+      </tr>
+    </table>
+
+    <!-- Componente utilizado para paginar la tabla -->
+    <div class="mt-4">
+      <mat-paginator
+        [pageSizeOptions]="[5, 10, 25]"
+        showFirstLastButtons
+        aria-label="Seleccionar páginas de libros"
+      ></mat-paginator>
+    </div>
+  </div>
+
+    <!-- Botón para creación del libro -->
+    <div>
+      <button
+        class="btn btn-primary"
+        (click)="openDialog()"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+          <path fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+            d="M12 4v16m-8-8h16" />
+        </svg>
+        Agregar libro
+      </button>
+    </div>
+</section>
 

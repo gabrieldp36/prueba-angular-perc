@@ -9,7 +9,7 @@ export const routes: Routes = [
 
   {
     path: 'library',
-    loadChildren: () => import('./library/library.routes'), //.then(m => m.countryRoutes)
+    loadChildren: () => import('./library/library.routes'),
   },
 
   {

@@ -18,6 +18,51 @@ body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+[class*="container-custom"] {
+  width: 90%;
+  max-width: 60rem;
+  margin: 0 auto;
+}
+
+/*******************************************Utilidades********************************************/
+
+.display-unset {
+  display: unset;
+}
+
+/*****************************************Angular Material*****************************************/
+
+.mdc-notched-outline__notch {
+  border-right: none;
+}
+
+.mat-mdc-table {
+  background-color: transparent !important;
+}
+
+.mat-mdc-paginator {
+  background-color: transparent !important;
+}
+
+.mat-mdc-header-cell {
+  text-align: center !important;
+}
+
+.mat-sort-header-container {
+  justify-content: center !important;
+}
+
+.mat-mdc-cell {
+  text-align: center !important;
+  padding: .8rem 0 !important;
+}
+
 /**************************************Home Component**************************************/
 
 .hero-bg {
@@ -37,5 +82,10 @@ body {
   max-width: 37rem;
 }
 
+/**************************************Dialog Create Edit Component**************************************/
 
-
+.dialog-custom-title {
+  font-size: 30px;
+  margin-bottom: 30px;
+  color: #0dd
+}

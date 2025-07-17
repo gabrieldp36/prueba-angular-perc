@@ -1,0 +1,34 @@
+<section class="p-10 min-w-96">
+  <h2 class="dialog-custom-title">{{!book ? 'Agregar libro' : 'Editar libro'}}</h2>
+  <div>
+    <form
+      [formGroup]="formBook"
+      class="flex flex-col justify-center align-items-center gap-6"
+    >
+      <!-- ID del Libro -->
+      <mat-form-field>
+        <mat-label>ID del libro</mat-label>
+        <input matInput type="number" formControlName="id"/>
+        @if (validatorService.validateField(formBook, 'id', 'required')) {
+          <mat-error class="font-11">El campo es obligatorio</mat-error>
+        }
+        @if (validatorService.validateField(formBook, 'id', 'errorId')) {
+          <mat-error class="font-11">El id ya se encuentra en uso</mat-error>
+        }
+      </mat-form-field>
+
+      <!-- Nombre del Libro -->
+      <mat-form-field>
+        <mat-label>Nombre del libro</mat-label>
+        <input matInput type="text" formControlName="name"/>
+        @if (validatorService.validateField(formBook, 'name', 'required')) {
+          <mat-error class="font-11">El campo es obligatorio</mat-error>
+        }
+      </mat-form-field>
+    </form>
+  </div>
+  <mat-dialog-actions>
+    <button mat-button (click)="dismiss()">Cerrar</button>
+    <button mat-button (click)="save()" [disabled]="formBook.invalid">Guardar</button>
+  </mat-dialog-actions>
+</section>
