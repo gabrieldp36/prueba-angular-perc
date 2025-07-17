@@ -1,15 +1,27 @@
 <section class="flex justify-center flex-col">
 
-  <!-- Formulario utilizado para el filtrado -->
-  <div>
+  <div class="flex justify-between gap-4">
+    <!-- Input utilizado para el filtrado -->
     <mat-form-field appearance="outline">
-      <mat-label>Filtrar</mat-label>
+      <mat-label>Buscar</mat-label>
       <input matInput (keyup)="applyFilter($event)" placeholder="Nombre del libro" #input>
     </mat-form-field>
+
+    <!-- Botón para creación del libro -->
+    <button
+      class="btn btn-primary"
+      (click)="openDialog()"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+        <path fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+          d="M12 4v16m-8-8h16" />
+      </svg>
+      Agregar libro
+    </button>
   </div>
 
   <!-- Tabla que muestra el listado de libros -->
-  <div class="w-full">
+  <div class="w-full overflow-x-auto overflow-y-hidden">
     <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
 
       <!-- Columna para mostrar un ícono del un libro -->
@@ -104,19 +116,5 @@
       ></mat-paginator>
     </div>
   </div>
-
-    <!-- Botón para creación del libro -->
-    <div>
-      <button
-        class="btn btn-primary"
-        (click)="openDialog()"
-      >
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-          <path fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-            d="M12 4v16m-8-8h16" />
-        </svg>
-        Agregar libro
-      </button>
-    </div>
 </section>
 

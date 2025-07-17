@@ -89,3 +89,13 @@ input::-webkit-inner-spin-button {
   margin-bottom: 30px;
   color: #0dd
 }
+
+.modal-custom-width-24 {
+  width: 90%;
+}
+
+@media(min-width: 450px) {
+  .modal-custom-width-24 {
+    min-width: 24rem;
+  }
+}
